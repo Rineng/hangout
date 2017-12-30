@@ -8,7 +8,7 @@ var eventSchema = new Schema(
 	}
 )
 
-//Vritual for patient's full name
+//Virtual for patient's full name
 eventSchema
 	.virtual('name')
 	.get(function(){
