@@ -1,4 +1,9 @@
-var User = require('../models/User');
+var User = require('../models/user');
+
+exports.index = function(req, res){					//change this, this should not be used to get homepage
+	res.send('NOT IMPLEMENTED: Site Home Page');
+};
+
 
 //Display list of all Users
 exports.user_list = function(req, res){
@@ -11,9 +16,9 @@ exports.user_detail = function(req, res){
 };
 
 //Display User create form on GET
-exports.user_create_get = function(req, res{
+exports.user_create_get = function(req, res){
 	res.send('NOT IMPLEMENTED: User create GET');
-});
+};
 
 //Handle User create on POST
 exports.user_create_post = function(req, res){
