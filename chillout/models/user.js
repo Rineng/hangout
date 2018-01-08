@@ -1,25 +1,27 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var userSchema = new Schema(
-	{
-		first_name: {type: String, required: true, max: 100},
-		last_name: {type: String, required: true, max: 100},
-	}
-)
+var userSchema = new Schema({
+	firstName: {type: String, required: true, max: 100},
+	lastName: {type: String, required: true, max: 100},
+	email: {type: String, required: true, unique: true},
+	password: {type: String, required: true},
+	passwordConfirm: {type: String, required: true}
+
+});
 
 //Vritual for patient's full name
 userSchema
 	.virtual('name')
 	.get(function(){
-		return this.las_name + ', ' + this.first_name;
+		return this.last_name + ', ' + this.first_name;
 	});
 
 //Virtual for patient's URL
 userSchema
 	.virtual('url')
 	.get(function(){
-		return '/users/patient/' + this._id;
+		return '/users/' + this._id;
 	});
 
 module.exports = mongoose.model('user', userSchema);

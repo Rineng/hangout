@@ -12,14 +12,14 @@ var eventSchema = new Schema(
 eventSchema
 	.virtual('name')
 	.get(function(){
-		return this.las_name + ', ' + this.first_name;
+		return this.last_name + ', ' + this.first_name;
 	});
 
 //Virtual for patient's URL
 eventSchema
 	.virtual('url')
 	.get(function(){
-		return '/users/patient/' + this._id;
+		return '/users/event/' + this._id;
 	});
 
 module.exports = mongoose.model('event', eventSchema);
