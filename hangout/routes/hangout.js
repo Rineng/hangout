@@ -13,12 +13,18 @@ router.get('/login', indexController.get_login);
 
 router.post('/login', passport.authenticate('login', {
 	successRedirect: '/home',
-	failureRedirect: '/failure',
+	failureRedirect: '/',
 	failureFlash: true
 }));
 
-//router.post('/login', indexController.post_login);
-
+// router.post('/login', function(req, res){
+// 	passport.authenticate('login', {
+// 		successRedirect: '/home',
+// 		failureRedirect: '/',
+// 		failureFlash: true
+// 	});
+// 	console.log("HELLO");
+// });
 
 router.get('/register', indexController.get_user_create)
 

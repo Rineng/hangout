@@ -45,8 +45,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(expressSession({secret: 'mySecretKey'}));
 app.use(passport.session());
 
-//app.use('/', index);
-//app.use('/hangout/users', hangout);
 app.use('/hangout', hangout);  // Add catalog routes to middleware chain.
 
 // catch 404 and forward to error handler

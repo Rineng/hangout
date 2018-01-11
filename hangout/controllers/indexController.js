@@ -35,17 +35,17 @@ var createHash = function(password){
 };
 
 var isValidPassword = function(user, password){
-  return bCrypt.compareSync(password, user.password);
+  return bcrypt.compareSync(password, user.password);
 }
 
 //defining passport strategy for logging in
 passport.use('login', new LocalStrategy({
-    usernameField: 'inputEmail',
+    usernameField: 'email',
     passReqToCallback : true
   },
-  function(req, inputEmail, inputPassword, done) { 
+  function(req, username, password, done) { 
     // check in mongo if a user with username exists or not
-    User.findOne({ 'email' : inputEmail }, 
+    User.findOne({ 'email' : username }, 
       function(err, user) {
         // In case of any error, return using the done method
         if (err){
@@ -58,7 +58,7 @@ passport.use('login', new LocalStrategy({
                 req.flash('message', 'User Not found.'));                 
         }
         // User exists but wrong password, log the error 
-        if (!isValidPassword(user, inputPassword)){
+        if (!isValidPassword(user, password)){
           console.log('Invalid Password');
           return done(null, false, 
               req.flash('message', 'Invalid Password'));
@@ -98,7 +98,7 @@ passport.use('signup', new LocalStrategy({
           // set the user's local credentials
           newUser.username = username;
           newUser.password = createHash(password);
-          newUser.email = req.param('email');
+          newUser.email = req.body.email;
           // save the user
           newUser.save(function(err) {
             if (err){
