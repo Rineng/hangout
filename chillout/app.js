@@ -37,7 +37,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //app.use('/', index);
-app.use('/users', users);
+app.use('/hangout/users', users);
 app.use('/hangout', hangout);  // Add catalog routes to middleware chain.
 
 // catch 404 and forward to error handler

@@ -7,68 +7,19 @@ var user_controller = require('../controllers/userController')
 const { body, validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 
+
 /* GET users listing. */
 // router.get('/', function(req, res, next) {
 //   res.send('respond with a resource');
-// });
-
-// router.get('/cool', function(req, res, next){
-//   res.send("You're so cool");
 // });
 
 // router.get('/delete', function(req, res, next){
 //   res.send("Delete worked");
 // });
 
-router.get('/user', user_controller.index);
 
-router.get('/user/create', user_controller.user_create_get);
+router.get('/create', user_controller.user_create_get);
 
-router.post('/user/create', user_controller.user_create_post);
-/*
-router.post('/user/create', (req, res, next) => {
-	body('first_name', 'First Name Required').isLength({ min: 1}).trim(),
-	body('last_name', 'Last Name Req').isLength({ min: 4}).trim();
-	body('email', 'Email Required').isLength({min: 1}).trim();
-	body('password', 'Password Required, must be 4 characters or more').isLength({min: 4}).trim();
-	body('passConfirm', 'Re-enter password').isLength({min: 1}).trim();
-	sanitizeBody('first_name').trim().escape();
-	sanitizeBody('last_name').trim().escape();
-	const errors = validationResult(req);
-	var user = new User({
-		firstName: req.body.first_name,
-		lastName: req.body.last_name,
-		email: req.body.email,
-		password: req.body.password,
-		passwordConfirm: req.body.passConfirm
-	});
-
-	if(!errors.isEmpty()){
-		res.render('user_form', {title: 'ERROR'});
-	return;
-	}
-	else{
-		User.findOne({'email': req.body.email})
-			.exec(function(err, found_user){
-				if(err){return next(err); }
-
-				if(found_user){
-					res.redirect(found_user.url)
-				}
-				else{
-					if(req.body.password == req.body.passConfirm){
-						user.save(function(err){
-							if(err){return next(err);}
-							res.redirect(user.url);
-						})
-					}
-					else{
-						res.render('user_form', {title: 'Passwords Do Not Match'});
-					}
-				}
-			})
-	}
-	
-});*/
+router.post('/create', user_controller.user_create_post);
 
 module.exports = router;
