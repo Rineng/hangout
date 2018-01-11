@@ -59,7 +59,8 @@ exports.user_create_post = [
 					if(err){return next(err); }
 
 					if(found_user){
-						res.redirect(found_user.url)
+						res.render('user_form', {title: 'Email already taken'})
+						//res.redirect(found_user.url)
 					}
 					else{
 						if(req.body.password == req.body.passConfirm){

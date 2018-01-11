@@ -18,8 +18,8 @@ const { sanitizeBody } = require('express-validator/filter');
 // });
 
 
-router.get('/create', user_controller.user_create_get);
+router.get('/register', user_controller.user_create_get);
 
-router.post('/create', user_controller.user_create_post);
+router.post('/register', user_controller.user_create_post);
 
 module.exports = router;
