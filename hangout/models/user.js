@@ -1,12 +1,14 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+const bcrypt = require('bcrypt');
 
 var userSchema = new Schema({
-	firstName: {type: String, required: true, max: 100},
-	lastName: {type: String, required: true, max: 100},
-	email: {type: String, required: true, unique: true},
-	password: {type: String, required: true},
-	passwordConfirm: {type: String, required: true}
+	username: {type: String, required: true, max: 20},
+	//firstName: {type: String, required: true, max: 20},
+	//lastName: {type: String, required: true, max: 20},
+	email: {type: String, required: true, max: 20},
+	password: {type: String, required: true, max: 20},
+	//passwordConfirm: {type: String, required: true, max: 20}
 
 });
 

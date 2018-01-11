@@ -1,59 +1,119 @@
 var index = require('../models/index');
-
 var async = require('async');
+var passport = require('passport');
+var LocalStrategy = require("passport-local").Strategy;
+var User = require('../models/user');
+const bcrypt = require('bcrypt');
 
 exports.get_login = function(req, res) {   
-    
     async.parallel({
         index_count: function(callback) {
             index.count(callback);
         },
     }, function(err, results) {
-        res.render('../views/login', { title: 'Login Page', error: err, data: results });
+        res.render('login', { title: 'Login Page', error: err, data: results });
     });
 };
 
-exports.post_login = [
-
-
-];
-
-//Display list of all indexs
-exports.index_list = function(req, res){
-	res.send('NOT IMPOLEMENTED: index list');
+exports.get_user_create = function(req, res){
+    res.render('registeration', {title: 'Create User'});
 };
 
-//Display detail page for a specific index
-exports.index_detail = function(req, res){
-	res.send('NOT IMPLEMENTED: index detail: ' + req.params.id);	
+
+passport.serializeUser(function(user, done) {
+  done(null, user._id);
+});
+ 
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+var createHash = function(password){
+ return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
 };
 
-//Display index create form on GET
-exports.index_create_get = function(req, res){
-	res.send('NOT IMPLEMENTED: index create GET');
-};
+var isValidPassword = function(user, password){
+  return bCrypt.compareSync(password, user.password);
+}
 
-//Handle index create on POST
-exports.index_create_post = function(req, res){
-	res.send('NOT IMPLEMENTED: index create POST');	
-};
+//defining passport strategy for logging in
+passport.use('login', new LocalStrategy({
+    usernameField: 'inputEmail',
+    passReqToCallback : true
+  },
+  function(req, inputEmail, inputPassword, done) { 
+    // check in mongo if a user with username exists or not
+    User.findOne({ 'email' : inputEmail }, 
+      function(err, user) {
+        // In case of any error, return using the done method
+        if (err){
+          return done(err);
+        }
+        // Username does not exist, log error & redirect back
+        if (!user){
+          console.log('User Not Found with username '+username);
+          return done(null, false, 
+                req.flash('message', 'User Not found.'));                 
+        }
+        // User exists but wrong password, log the error 
+        if (!isValidPassword(user, inputPassword)){
+          console.log('Invalid Password');
+          return done(null, false, 
+              req.flash('message', 'Invalid Password'));
+        }
+        // User and password both match, return user from 
+        // done method which will be treated like success
+        return done(null, user);
+      }
+    );
+}));
 
-//Display index delete form on GET
-exports.index_delete_get = function(req, res){
-	res.send('NOT IMPLEMENTED: index delete GET');	
-};
 
-// Handle index delete on POST
-exports.index_delete_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: index delete POST');
-};
 
-// Display index update form on GET
-exports.index_update_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: index update GET');
-};
+//defining passport strategy for signing up
+passport.use('signup', new LocalStrategy({
+    passReqToCallback : true
+  },
+  function(req, username, password, done) {
+    findOrCreateUser = function(){
+      // find a user in Mongo with provided username
+      User.findOne({'username':username},function(err, user) {
+        console.log("hello");
+        // In case of any error return
+        if (err){
+          console.log('Error in SignUp: '+err);
+          return done(err);
+        }
+        // already exists
+        if (user) {
+          console.log('User already exists');
+          return done(null, false, 
+             req.flash('message','User Already Exists'));
+        } else {
+          // if there is no user with that email
+          // create the user
+          var newUser = new User();
+          // set the user's local credentials
+          newUser.username = username;
+          newUser.password = createHash(password);
+          newUser.email = req.param('email');
+          // save the user
+          newUser.save(function(err) {
+            if (err){
+              console.log('Error in Saving user: '+err);  
+              throw err;  
+            }
+            console.log('User Registration succesful');    
+            return done(null, newUser);
+          });
+        }
+      });
+    };
+    // Delay the execution of findOrCreateUser and execute 
+    // the method in the next tick of the event loop
+    process.nextTick(findOrCreateUser);
+  })
+);
 
-// Handle index update on POST
-exports.index_update_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: index update POST');
-};

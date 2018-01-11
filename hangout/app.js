@@ -7,7 +7,12 @@ var expressValidator = require('express-validator');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var hangout = require('./routes/hangout');
+var passport = require('passport');
 var path = require('path');
+
+var expressSession = require('express-session');
+
+
 
 //var cons = require('consolidate'); //to use default html engine
 var app = express();
@@ -34,10 +39,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(cookieParser());
+app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(expressSession({secret: 'mySecretKey'}));
+app.use(passport.session());
+
 //app.use('/', index);
-app.use('/hangout/users', users);
+//app.use('/hangout/users', hangout);
 app.use('/hangout', hangout);  // Add catalog routes to middleware chain.
 
 // catch 404 and forward to error handler

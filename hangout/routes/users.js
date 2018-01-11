@@ -4,22 +4,11 @@ var User = require('../models/user');
 //Require controller modules
 //var event_controller = require('../controllers/eventController');
 var user_controller = require('../controllers/userController')
-const { body, validationResult } = require('express-validator/check');
-const { sanitizeBody } = require('express-validator/filter');
+//const { body, validationResult } = require('express-validator/check');
+//const { sanitizeBody } = require('express-validator/filter');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
 
-
-/* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
-
-// router.get('/delete', function(req, res, next){
-//   res.send("Delete worked");
-// });
-
-
-router.get('/register', user_controller.user_create_get);
-
-router.post('/register', user_controller.user_create_post);
 
 module.exports = router;
