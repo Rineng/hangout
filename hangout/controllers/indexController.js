@@ -40,12 +40,11 @@ var isValidPassword = function(user, password){
 
 //defining passport strategy for logging in
 passport.use('login', new LocalStrategy({
-    usernameField: 'email',
-    passReqToCallback : true
+    passReqToCallback: true
   },
   function(req, username, password, done) { 
     // check in mongo if a user with username exists or not
-    User.findOne({ 'email' : username }, 
+    User.findOne({ 'email': username }, 
       function(err, user) {
         // In case of any error, return using the done method
         if (err){
@@ -74,7 +73,7 @@ passport.use('login', new LocalStrategy({
 
 //defining passport strategy for signing up
 passport.use('signup', new LocalStrategy({
-    passReqToCallback : true
+    passReqToCallback: true
   },
   function(req, username, password, done) {
     findOrCreateUser = function(){

@@ -8,6 +8,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 var hangout = require('./routes/hangout');
 var passport = require('passport');
+var flash = require('connect-flash');
 var path = require('path');
 
 var expressSession = require('express-session');
@@ -41,7 +42,7 @@ app.use(expressValidator());
 app.use(cookieParser());
 app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(flash())
 app.use(expressSession({secret: 'mySecretKey'}));
 app.use(passport.session());
 
