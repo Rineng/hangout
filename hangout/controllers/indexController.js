@@ -1,4 +1,4 @@
-var index = require('../models/index');
+var index = require('../models/events');
 var async = require('async');
 var passport = require('passport');
 var LocalStrategy = require("passport-local").Strategy;
@@ -6,13 +6,7 @@ var User = require('../models/user');
 const bcrypt = require('bcrypt');
 
 exports.get_login = function(req, res) {   
-    async.parallel({
-        index_count: function(callback) {
-            index.count(callback);
-        },
-    }, function(err, results) {
-        res.render('login', { title: 'Login Page', error: err, data: results });
-    });
+        res.render('login', { title: 'Login Page'});
 };
 
 exports.get_user_create = function(req, res){
@@ -44,7 +38,7 @@ passport.use('login', new LocalStrategy({
   },
   function(req, username, password, done) { 
     // check in mongo if a user with username exists or not
-    User.findOne({ 'email': username }, 
+    User.findOne({ 'email': username}, 
       function(err, user) {
         // In case of any error, return using the done method
         if (err){
@@ -115,4 +109,9 @@ passport.use('signup', new LocalStrategy({
     process.nextTick(findOrCreateUser);
   })
 );
+
+
+
+
+
 

@@ -3,23 +3,24 @@ var Schema = mongoose.Schema;
 
 var eventSchema = new Schema(
 	{
-		first_name: {type: String, required: true, max: 100},
-		last_name: {type: String, required: true, max: 100},
+		name: {type: String, required: true, max: 100},
+		typeOfEvent: {type: String, required: true, max: 100},
+		location: {type: String, max: 100}
 	}
 )
 
 //Virtual for patient's full name
 eventSchema
-	.virtual('name')
+	.virtual('title')
 	.get(function(){
-		return this.last_name + ', ' + this.first_name;
+		return this.name;
 	});
 
 //Virtual for patient's URL
 eventSchema
 	.virtual('url')
 	.get(function(){
-		return '/users/event/' + this._id;
+		return '/event/' + this._id;
 	});
 
 module.exports = mongoose.model('event', eventSchema);

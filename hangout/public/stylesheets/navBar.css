@@ -1,5 +1,8 @@
-p {
-	font-size: 40px;
-	border-color: green;
-	border-style: solid;
+body {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.navbar {
+  margin-bottom: 20px;
 }

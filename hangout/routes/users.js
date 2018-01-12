@@ -11,4 +11,10 @@ var LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 
 
+
+router.get('/profile', function(req, res){
+	res.render('profile');
+});
+
+
 module.exports = router;

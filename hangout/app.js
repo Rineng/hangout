@@ -4,7 +4,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressValidator = require('express-validator');
-var index = require('./routes/index');
+var index = require('./routes/events');
 var users = require('./routes/users');
 var hangout = require('./routes/hangout');
 var passport = require('passport');
@@ -46,8 +46,8 @@ app.use(flash())
 app.use(expressSession({secret: 'mySecretKey'}));
 app.use(passport.session());
 
-app.use('/hangout', hangout);  // Add catalog routes to middleware chain.
-
+app.use('/hangout', hangout);
+app.use('/hangout/user', users);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

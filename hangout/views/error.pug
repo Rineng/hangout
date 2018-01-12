@@ -1,6 +1,6 @@
-extends layout
+extends ../node_modules/jade-bootstrap/layouts/navbar.pug
 
-block content
+append body
   h1= message
   h2= error.status
   pre #{error.stack}
