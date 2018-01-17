@@ -1,4 +1,3 @@
-var index = require('../models/events');
 var async = require('async');
 var passport = require('passport');
 var LocalStrategy = require("passport-local").Strategy;
@@ -6,8 +5,13 @@ var User = require('../models/user');
 const bcrypt = require('bcrypt');
 
 exports.get_login = function(req, res) {   
-        res.render('login', { title: 'Login Page'});
+        res.render('forms/login', { title: 'Login Page'});
 };
+
+exports.get_createForm = function(req, res){
+    res.render('forms/eventForm');
+};
+
 
 exports.get_user_create = function(req, res){
     res.render('registeration', {title: 'Create User'});

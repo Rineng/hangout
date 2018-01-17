@@ -5,7 +5,8 @@ var eventSchema = new Schema(
 	{
 		name: {type: String, required: true, max: 100},
 		typeOfEvent: {type: String, required: true, max: 100},
-		location: {type: String, max: 100}
+		location: {type: String, max: 100},
+		date: {type: String, required: true, max: 10}
 	}
 )
 

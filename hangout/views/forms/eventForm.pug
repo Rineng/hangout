@@ -1,0 +1,15 @@
+extends ../base
+
+append body
+	.container
+		form.event(method="POST" action='')
+			h2.title Create Event
+			label(for='eventName') Event Name
+			input#eventName(type='text' placeholder='Event Name' Required name='eventName')
+			label(for='location') Address
+			input#location(type='text' placeholder='Address' Required name='address')
+			label(for='date') Date
+			input#date(type='text' placeholder='Enter a date' name='date')
+			label(for='type') Category
+			input#type(type='text' placeholder='Enter Category' name='type')
+			button#submit(type='submit') Submit
