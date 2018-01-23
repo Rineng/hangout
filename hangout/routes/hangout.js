@@ -6,9 +6,19 @@ var indexController = require('../controllers/indexController');
 const { body, validationResult } = require('express-validator/check');
 const { sanitizeBody } = require('express-validator/filter');
 var passport = require('passport');
-
+var User = require('../models/user');
 
 router.get('/', function(req, res){
+	res.render('homepage');
+});
+
+router.get('/jsonTest', function(req, res){
+	var db = req.db;
+	var name = null;
+	var result = db.collection('user').findOne({'username': 'ron'}, function(err, results){
+		console.log(results);
+		res.json(result);
+	});
 	res.render('homepage');
 });
 
@@ -27,7 +37,7 @@ router.post('/login', passport.authenticate('login', {
 router.get('/signup', indexController.get_user_create)
 
 router.post('/signup', passport.authenticate('signup', {
-	successRedirect: '/home',
+	successRedirect: '/hangout',
 	failureRedirect: '/signup',
 	failureFlash: true
 }));

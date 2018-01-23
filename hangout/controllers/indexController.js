@@ -8,9 +8,6 @@ exports.get_login = function(req, res) {
         res.render('forms/login', { title: 'Login Page'});
 };
 
-exports.get_createForm = function(req, res){
-    res.render('forms/eventForm');
-};
 
 
 exports.get_user_create = function(req, res){

@@ -13,7 +13,7 @@ exports.post_createForm = [
 	body('type', 'What type of event is this?').isLength({min: 1}).trim(),
 	sanitizeBody('eventName').trim().escape(),
 	sanitizeBody('address').trim().escape(),
-	sanitizeBody('date').trim().escape(),
+	sanitizeBody('date').toDate(),
 	sanitizeBody('type').trim().escape(),
 	(req, res, next) => {
 		var newEvent = new event({

@@ -13,15 +13,14 @@ var path = require('path');
 
 var expressSession = require('express-session');
 
-
-
 //var cons = require('consolidate'); //to use default html engine
 var app = express();
 
 //Set up mongoose connection
 var mongoose = require('mongoose');
-//var mongoDB = 'mongodb://rineng:ilovemango@ds135777.mlab.com:35777/medical';
 mongoose.connect('mongodb://rineng:ilovemango@ds237717.mlab.com:37717/chillout');
+//mongoose.connect('mongodb://rineng:ilovemango@ds237717.mlab.com:37717/hangout');
+
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -35,6 +34,10 @@ app.set('view engine', 'pug');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(function(req, res, next){
+	req.db = db;
+	next();
+});
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
