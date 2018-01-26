@@ -8,7 +8,17 @@ exports.get_login = function(req, res) {
         res.render('forms/login', { title: 'Login Page'});
 };
 
-
+exports.get_logout = function(req, res){
+  if(req.session.user_id != null){
+    console.log("logged in");
+    req.session.user_id = null;
+    res.redirect('/hangout/login');
+  }
+  else{
+    console.log("logged out");
+    res.redirect('/hangout/login');
+  }
+};
 
 exports.get_user_create = function(req, res){
     res.render('registeration', {title: 'Create User'});
@@ -59,6 +69,8 @@ passport.use('login', new LocalStrategy({
         }
         // User and password both match, return user from 
         // done method which will be treated like success
+        req.session.userName = user.username;
+        console.log(req.session.user_id != null);
         return done(null, user);
       }
     );

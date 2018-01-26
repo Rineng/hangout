@@ -10,7 +10,6 @@ var hangout = require('./routes/hangout');
 var passport = require('passport');
 var flash = require('connect-flash');
 var path = require('path');
-
 var expressSession = require('express-session');
 
 //var cons = require('consolidate'); //to use default html engine

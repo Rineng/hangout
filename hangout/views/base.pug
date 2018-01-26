@@ -43,12 +43,19 @@ block body
 				ul.nav.navbar-nav.navbar-right
 					li.active
 						a(href='#')
-							| Profile 
-							span.sr-only (current)
+							if userAuth
+								//| LoggedIn
+								| #{userName}
+							else
+								| Profile 
+								span.sr-only (current)
 					li
 						a(href='http://localhost:3000/hangout/event') Create Event
 					li
 						a(href='http://localhost:3000/hangout/login') Login
+					li
+						a(href='http://localhost:3000/hangout/logout') Logout
+
 
 
 
